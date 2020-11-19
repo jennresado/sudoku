@@ -6,6 +6,16 @@ h1 {
     color: slategrey;
 }
 
+#instructions {
+    margin: auto;
+    width: 60%;
+    text-align: center;
+}
+
+#play {
+    width: 100%;
+}
+
 input {
     text-align: center;
     border: none;

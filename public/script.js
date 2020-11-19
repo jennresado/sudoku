@@ -2,8 +2,17 @@
 document.addEventListener('DOMContentLoaded', init);
 
 function init() {
+    let mainDiv = document.querySelector("#mainDiv");
+    let playBtn = document.querySelector("#play");
+    let instructions = document.querySelector("#instructions");
     let puzzle = new Sudoku();
     puzzle.build();
+
+    playBtn.addEventListener("click", function(){
+        // Close instructions modal
+        mainDiv.classList.remove("display");
+        instructions.classList.add("display");
+    })
 }
 
 class Sudoku {
@@ -195,7 +204,7 @@ class Sudoku {
                 // Randomly fill in board and leave some spaces empty
                 let random = Math.floor(Math.random() * this.size);
                 
-                if (random < 8) {
+                if (random < 6) {
                     this.board[i][j].value = this.boardVals[i][j];
                     this.board[i][j].readOnly = true;
                 } else {
