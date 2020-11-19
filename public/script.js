@@ -9,8 +9,8 @@ function init() {
 class Sudoku {
     constructor() {
         this.size = 9;
-        this.status = false;  // state of game
         this.board = [];
+        this.boardVals = [];
         this.i = 0;  // row index
         this.j = 0;  // col index
         this.rowVals = {};  // track unique values of rows
@@ -42,6 +42,7 @@ class Sudoku {
         for (let i = 0; i < this.size; i++) {
             let row = document.createElement("div");
             this.board[i] = [];
+            this.boardVals[i] = [];
 
             row.classList.add("row");
 
@@ -59,6 +60,7 @@ class Sudoku {
                 input.id = `board-${i}${j}`;
                 row.appendChild(input);
                 this.board[i].push(input);
+                this.boardVals[i].push(0);
             }
             
             table.appendChild(row);
@@ -85,7 +87,7 @@ class Sudoku {
                 this.setTracking()
             } else {
                 // Assign value
-                this.board[this.i][this.j] = val;
+                this.boardVals[this.i][this.j] = val;
 
                 // Track unique values for rows, columns, and quadrants
                 this.rowVals[this.i].push(val);
@@ -187,5 +189,86 @@ class Sudoku {
         /**
          * Assign the values of the Sudoku puzzle.
          */
+
+        for (let i = 0; i < this.size; i ++) {
+            for (let j = 0; j < this.size; j++) {
+                // Randomly fill in board and leave some spaces empty
+                let random = Math.floor(Math.random() * this.size);
+                
+                if (random < 8) {
+                    this.board[i][j].value = this.boardVals[i][j];
+                    this.board[i][j].readOnly = true;
+                } else {
+                    this.board[i][j].classList.add("guess");
+                }
+
+                let puzzleObj = this;
+                this.bindInput(this.board[i][j], puzzleObj);
+            }
+        }
+    }
+
+    bindInput(el, puzzleObj) {
+        /**
+         * Game is won when the puzzle is solved.
+         */
+
+        el.addEventListener("change", function(err){
+            let row = parseInt(el.id.charAt(6));
+            let col = parseInt(el.id.charAt(7));
+            let val = parseInt(el.value);
+
+            // Update game state
+            if (puzzleObj.boardVals[row][col] == val) {
+                // If board is filled and puzzle is valid, player wins
+                let status = true;
+                let full = true;
+
+                for (let i = 0; i < puzzleObj.size; i++) {
+                    for (let j = 0; j < puzzleObj.size; j++) {
+                        if (puzzleObj.board[i][j].value === null) {
+                            full = false;
+                            status = false;
+                        } else if (puzzleObj.board[i][j].value != puzzleObj.boardVals[i][j]) {
+                            status = false;
+                        }
+                    }
+                }
+
+                // Game is won, option to replay
+                if (full == true && status == true) {
+                    puzzleObj.replay(puzzleObj);
+                }
+            } 
+        })
+    }
+
+    replay(puzzleObj) {
+        /**
+         * Game is won, give option to replay.
+         */
+
+        let yesBtn = document.querySelector("#yes");
+        let noBtn = document.querySelector("#no");
+        let messageModal = document.querySelector("#message");
+        let mainDiv = document.querySelector("#mainDiv");
+
+        // New game
+        yesBtn.addEventListener("click", function(){
+            mainDiv.removeChild(mainDiv.childNodes[0]);
+            puzzleObj.build();
+            messageModal.classList.add("display");
+            mainDiv.classList.remove("display");
+        });
+
+        // Display finished game
+        noBtn.addEventListener("click", function() {
+            mainDiv.classList.remove("display");
+            messageModal.classList.add("display");
+        });
+
+        // Display winning message modal
+        mainDiv.classList.add("display");
+        messageModal.classList.remove("display");
     }
 }

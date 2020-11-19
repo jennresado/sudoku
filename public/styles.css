@@ -1,6 +1,9 @@
 h1 {
+    font-family: 'Lobster', cursive;
+    font-size: 4rem;
     text-align: center;
     margin: 3% 0 3% 0;
+    color: slategrey;
 }
 
 input {
@@ -9,23 +12,54 @@ input {
 }
 
 input[id^='board'] {
-    border: 1px solid grey;
+    border: 1px solid lightgrey;
 }
 
 input[id^='board-0'], input[id^='board-3'], input[id^='board-6'] {
-    border-top: 3px solid black;
+    border-top: 2px solid grey;
 }
 
 input[id^='board-8'] {
-    border-bottom: 3px solid black;
+    border-bottom: 2px solid grey;
 }
 
 .quadrantLeftBorder {
-    border-left: 3px solid black !important;
+    border-left: 2px solid grey !important;
 }
 
 .quadrantRightBorder {
-    border-right: 3px solid black !important;
+    border-right: 2px solid grey !important;
+}
+
+#board-00 {
+    border-top-left-radius: 10px;
+}
+
+#board-08 {
+    border-top-right-radius: 10px;
+}
+
+#board-80 {
+    border-bottom-left-radius: 10px;
+}
+
+#board-88 {
+    border-bottom-right-radius: 10px;
+}
+
+.guess {
+    color: magenta;
+}
+
+#message {
+    margin: auto;
+    width: 250px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.display {
+    display: none;
 }
 
 @media screen and (max-width: 576px) {
