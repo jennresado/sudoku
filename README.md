@@ -19,6 +19,8 @@ Game Rules
       must also contain the numbers 1-9, without repetition or omission.
    
       Every puzzle has just one correct solution.
+      
+      http://www.counton.org/sudoku/rules-of-sudoku.php
 
 Game Instructions
    1. Enter a numerical value into a text field and hit enter to register the value.

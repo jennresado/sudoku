@@ -136,6 +136,8 @@ class Sudoku {
         /**
          * Return a random value from values 1 through 9 that is unique
          * to the row, column, and quadrant.
+         * Utilizes linear programming and constraint methods.
+         * Methods are iterated until a solution is found.
          */
         
         let vals = [1, 2, 3, 4, 5, 6, 7, 8, 9];
