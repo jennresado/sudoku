@@ -9,7 +9,6 @@ function init() {
 class Sudoku {
     constructor() {
         this.size = 9;
-        this.status = false;  // state of game
         this.board = [];
         this.boardVals = [];
         this.i = 0;  // row index
@@ -198,72 +197,77 @@ class Sudoku {
                 
                 if (random < 8) {
                     this.board[i][j].value = this.boardVals[i][j];
+                    this.board[i][j].readOnly = true;
+                } else {
+                    this.board[i][j].classList.add("guess");
                 }
 
-                this.bindSolver(this.board[i][j]);
+                let puzzleObj = this;
+                this.bindInput(this.board[i][j], puzzleObj);
             }
         }
     }
 
-    bindSolver(el) {
+    bindInput(el, puzzleObj) {
         /**
          * Game is won when the puzzle is solved.
          */
 
-        el.addEventListener("value", function(){
-            console.log("value changed");
-            let row = el.id.charAt(6);
-            let col = el.id.charAt(7);
+        el.addEventListener("change", function(err){
+            let row = parseInt(el.id.charAt(6));
+            let col = parseInt(el.id.charAt(7));
+            let val = parseInt(el.value);
 
             // Update game state
-            if (this.boardVals[row][col] == el.value) {
-                // redo status
-                this.status = true;
-
+            if (puzzleObj.boardVals[row][col] == val) {
                 // If board is filled and puzzle is valid, player wins
+                let status = true;
                 let full = true;
 
-                for (let i = 0; i < this.size; i++) {
-                    for (let j = 0; i < this.size; j++) {
-                        if (this.board[i][j].value === null) {
+                for (let i = 0; i < puzzleObj.size; i++) {
+                    for (let j = 0; j < puzzleObj.size; j++) {
+                        if (puzzleObj.board[i][j].value === null) {
                             full = false;
+                            status = false;
+                        } else if (puzzleObj.board[i][j].value != puzzleObj.boardVals[i][j]) {
+                            status = false;
                         }
                     }
                 }
 
-                if (full == true) {
-                    // Game is won, option to replay
-                    this.status = true;
-                    this.replay();
+                // Game is won, option to replay
+                if (full == true && status == true) {
+                    puzzleObj.replay(puzzleObj);
                 }
-            } else {
-                this.status = false;
-            }
+            } 
         })
     }
 
-    replay() {
+    replay(puzzleObj) {
         /**
          * Game is won, give option to replay.
          */
 
-        let yesBtn = document.querySelector("yes");
-        let noBtn = document.querySelector("no");
+        let yesBtn = document.querySelector("#yes");
+        let noBtn = document.querySelector("#no");
         let messageModal = document.querySelector("#message");
         let mainDiv = document.querySelector("#mainDiv");
 
+        // New game
         yesBtn.addEventListener("click", function(){
-            this.buildValues();
-            this.updateLayout();
-            this.status = false;
+            mainDiv.removeChild(mainDiv.childNodes[0]);
+            puzzleObj.build();
             messageModal.classList.add("display");
+            mainDiv.classList.remove("display");
         });
 
+        // Display finished game
         noBtn.addEventListener("click", function() {
             mainDiv.classList.remove("display");
             messageModal.classList.add("display");
         });
 
+        // Display winning message modal
         mainDiv.classList.add("display");
         messageModal.classList.remove("display");
     }
