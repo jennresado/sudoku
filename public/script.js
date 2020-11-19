@@ -11,6 +11,7 @@ class Sudoku {
         this.size = 9;
         this.status = false;  // state of game
         this.board = [];
+        this.boardVals = [];
         this.i = 0;  // row index
         this.j = 0;  // col index
         this.rowVals = {};  // track unique values of rows
@@ -42,6 +43,7 @@ class Sudoku {
         for (let i = 0; i < this.size; i++) {
             let row = document.createElement("div");
             this.board[i] = [];
+            this.boardVals[i] = [];
 
             row.classList.add("row");
 
@@ -59,6 +61,7 @@ class Sudoku {
                 input.id = `board-${i}${j}`;
                 row.appendChild(input);
                 this.board[i].push(input);
+                this.boardVals[i].push(0);
             }
             
             table.appendChild(row);
@@ -85,7 +88,7 @@ class Sudoku {
                 this.setTracking()
             } else {
                 // Assign value
-                this.board[this.i][this.j] = val;
+                this.boardVals[this.i][this.j] = val;
 
                 // Track unique values for rows, columns, and quadrants
                 this.rowVals[this.i].push(val);
@@ -187,5 +190,81 @@ class Sudoku {
         /**
          * Assign the values of the Sudoku puzzle.
          */
+
+        for (let i = 0; i < this.size; i ++) {
+            for (let j = 0; j < this.size; j++) {
+                // Randomly fill in board and leave some spaces empty
+                let random = Math.floor(Math.random() * this.size);
+                
+                if (random < 8) {
+                    this.board[i][j].value = this.boardVals[i][j];
+                }
+
+                this.bindSolver(this.board[i][j]);
+            }
+        }
+    }
+
+    bindSolver(el) {
+        /**
+         * Game is won when the puzzle is solved.
+         */
+
+        el.addEventListener("value", function(){
+            console.log("value changed");
+            let row = el.id.charAt(6);
+            let col = el.id.charAt(7);
+
+            // Update game state
+            if (this.boardVals[row][col] == el.value) {
+                // redo status
+                this.status = true;
+
+                // If board is filled and puzzle is valid, player wins
+                let full = true;
+
+                for (let i = 0; i < this.size; i++) {
+                    for (let j = 0; i < this.size; j++) {
+                        if (this.board[i][j].value === null) {
+                            full = false;
+                        }
+                    }
+                }
+
+                if (full == true) {
+                    // Game is won, option to replay
+                    this.status = true;
+                    this.replay();
+                }
+            } else {
+                this.status = false;
+            }
+        })
+    }
+
+    replay() {
+        /**
+         * Game is won, give option to replay.
+         */
+
+        let yesBtn = document.querySelector("yes");
+        let noBtn = document.querySelector("no");
+        let messageModal = document.querySelector("#message");
+        let mainDiv = document.querySelector("#mainDiv");
+
+        yesBtn.addEventListener("click", function(){
+            this.buildValues();
+            this.updateLayout();
+            this.status = false;
+            messageModal.classList.add("display");
+        });
+
+        noBtn.addEventListener("click", function() {
+            mainDiv.classList.remove("display");
+            messageModal.classList.add("display");
+        });
+
+        mainDiv.classList.add("display");
+        messageModal.classList.remove("display");
     }
 }
