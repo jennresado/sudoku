@@ -1,0 +1,26 @@
+{
+  "name": "cs325_portfolio_sudoku",
+  "version": "1.0.0",
+  "description": "Sudoku puzzle game",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.0",
+    "handlebars": "^4.7.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jennresado/sudoku.git"
+  },
+  "author": "Jennifer Do",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jennresado/sudoku/issues"
+  },
+  "homepage": "https://github.com/jennresado/sudoku#readme"
+}

@@ -1,26 +1,31 @@
-To run act.py with "act.txt" file
-1. $ python3 act.py
-2. To run act.py, python3 is required
-3. "act.txt" file structure follows
-   a. The file contains lists of activity sets  with number of 
-      activities in the set in the first line followed by lines 
-      containing the activity  number, start time and finish time. 
+To run the Sudoku game
+   1. Is already running on the flip3.engr.oregonstate.edu server
+      a. Connect to flip3.engr.oregonstate.edu server
+      b. go to http://flip3.engr.oregonstate.edu:3001
 
-   b. Example values for "act.txt":
-      11
-      1 1 4
-      2 3 5
-      3 0 6
-      4 5 7
-      5 3 9
-      6 5 9
-      7 6 10
-      8 8 11
-      9 8 12
-      10 2 14
-      11 12 16
-      3
-      3 6 8
-      1 7 9
-      2 1 2
-4. The output will be printed to the terminal
+   OR
+
+   2. $ node app.js
+      a. The game is hosted on port: 3001
+   
+Game Rules
+   1. The game Sudoku involves a grid of 81 squares. 
+
+      The grid is divided into nine blocks, each containing nine squares.
+
+      The rules of the game are simple: each of the nine blocks has to 
+      contain all the numbers 1-9 within its squares. Each number can 
+      only appear once in a row, column or box.
+   
+      The difficulty lies in that each vertical nine-square column, 
+      or horizontal nine-square line across, within the larger square, 
+      must also contain the numbers 1-9, without repetition or omission.
+   
+      Every puzzle has just one correct solution.
+
+Game Instructions
+   1. Enter a numerical value into a text field and hit enter to register the value.
+
+Complexity Reference
+   1. Yato and Seta (2003)
+   2. Rodrigues Pereira et al. (2001), Nicolau and Ryan (2006)
