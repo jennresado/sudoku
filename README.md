@@ -5,8 +5,7 @@ To run the Sudoku game
 
    OR
 
-   2. $ node app.js
-      a. The game is hosted on port: 3001
+   2. open index.html
    
 Game Rules
    1. The game Sudoku involves a grid of 81 squares. 
