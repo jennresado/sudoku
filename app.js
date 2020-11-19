@@ -12,8 +12,6 @@ var express     = require("express"),
       
     // ROOT ROUTE
     app.get("/", function(req, res, next){
-        //var context = {}
-        //context.message = 'setup successful';
         res.render('home');
     });
     

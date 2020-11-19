@@ -3,20 +3,27 @@ document.addEventListener('DOMContentLoaded', init);
 
 function init() {
     let puzzle = new Sudoku();
+    puzzle.build();
 }
 
 class Sudoku {
     constructor() {
         this.size = 9;
         this.status = false;  // state of game
-        this.rows = [];  // holds state of each row
-        this.columns = [];  // holds state of each column
-        this.board = this.build();
+        this.board = [];
     }
 
     build() {
         /**
-         * Builds the puzzle board.
+         * Builds the puzzle.
+         */
+        this.buildLayout();
+        this.buildValues();
+    }
+
+    buildLayout() {
+        /**
+         * Builds the puzzle board UI.
          */
         
         let mainDiv = document.querySelector("#mainDiv");
@@ -42,27 +49,37 @@ class Sudoku {
                 input.classList.add("col");
                 input.type = "text";
                 input.id = `board-${i}${j}`
-                // assign random value from 1 to 9 to row/column
-                // value needs to be unique to row and column
-                input.value = this.getRandomInt();
                 row.appendChild(input);
             }
-             
+            
             table.appendChild(row);
         }
 
         mainDiv.appendChild(table);
     }
 
+    buildValues() {
+        /**
+         * Construct and assign the values of the Sudoku
+         * puzzle to the UI.
+         */
+
+        let board = [];
+
+        for (let i = 0; i < this.size; i++) {
+            
+        }        
+    }
+
     getRandomInt() {
         /**
-         * Return a random value from [1,10) that is unique
+         * Return a random value from [1, 10) that is unique
          * to the row, column, and quadrant.
          */
         
-        let min = Math.ceil(1);
-        let max = Math.floor(10); 
+         let min = Math.ceil(1);
+         let max = Math.floor(10);
 
-        return Math.floor(Math.random() * (max - min) + min);
+         return Math.floor(Math.random() * (max - min) + min);
     }
 }
