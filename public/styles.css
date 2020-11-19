@@ -93,12 +93,20 @@ input[id^='board-8'] {
         width: 50%;
     }
 
+    #instructions {
+        width: 50%;
+    }
+
     input {
         padding: 10px 5px 10px 5px;
     }
 }
 
 @media screen and (min-width: 992px) {
+    #instructions {
+        width: 30%;
+    }
+    
     input {
         padding: 15px 0 15px 0;
     }
