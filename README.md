@@ -1,7 +1,5 @@
 To run the Sudoku game
-   1. Is already running on the flip3.engr.oregonstate.edu server
-      a. Connect to flip3.engr.oregonstate.edu server
-      b. go to http://flip3.engr.oregonstate.edu:3001
+   1. http://web.engr.oregonstate.edu/~doje/sudoku/
 
    OR
 
